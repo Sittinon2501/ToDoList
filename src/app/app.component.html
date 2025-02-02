@@ -1,0 +1,69 @@
+<nav
+  class="navbar navbar-expand-lg bg-light navbar-light fixed-top shadow-sm mb-5"
+>
+  <div class="container">
+    <!-- Brand -->
+    <a class="navbar-brand fw-bold" href="#">
+      <i class="bi bi-code-slash me-2"></i>
+      TaskTODO
+    </a>
+
+    <!-- Mobile Toggle Button -->
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarContent"
+      [attr.aria-expanded]="!isCollapsed"
+      aria-controls="navbarContent"
+      (click)="toggleNavbar()"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Navbar Content -->
+    <div
+      class="collapse navbar-collapse"
+      id="navbarContent"
+      [class.show]="!isCollapsed"
+    >
+      <!-- Main Navigation -->
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/home" routerLinkActive="active"
+            ><i class="bi bi-house-exclamation"></i> หน้าแรก</a
+          >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/tasks" routerLinkActive="active"
+            ><i class="bi bi-list"></i> รายการ Tasks</a
+          >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/history" routerLinkActive="active"
+            ><i class="bi bi-clock-history"></i> ประวัติ Tasks</a
+          >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/user-guide">
+            <i class="bi bi-book"></i> คู่มือการใช้งาน
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/teams"
+            ><i class="bi bi-pc"></i> เกี่ยวกับผู้พัฒนา</a
+          >
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="nav-content-container"></div>
+<div class="container-md">
+  <div class="card">
+    <div class="card-body">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

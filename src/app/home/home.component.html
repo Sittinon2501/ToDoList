@@ -1,0 +1,84 @@
+<div class="container my-5">
+  <h1 class="text-center">ระบบบันทึกงาน To-Do List</h1>
+  <h2 class="text-center text-muted">จัดการงานของคุณตามความสำคัญ</h2>
+  
+  <div class="row mt-4 justify-content-center">
+    <!-- กลุ่มระดับความสำคัญ -->
+    <div class="col-md-8">
+      <div class="card shadow-sm">
+        <div class="card-header text-white text-center" 
+             [ngClass]="{
+               'bg-danger': currentPriority === 'high' && currentTasks.length > 0,
+               'bg-warning': currentPriority === 'medium' && currentTasks.length > 0,
+               'bg-success': currentPriority === 'low' && currentTasks.length > 0,
+               'bg-dark': currentTasks.length === 0
+             }">
+          <h5 class="mb-0">
+            <i class="bi bi-flag-fill"></i>
+            งานที่มีความสำคัญระดับ {{ currentPriority | titlecase }}
+          </h5>
+        </div>
+        <div class="card-body">
+          <div *ngIf="currentTasks.length > 0; else noTasks">
+            <!-- แสดงงานในรูปแบบ 3 คอลัมน์ -->
+            <div class="row">
+              <div *ngFor="let task of currentTasks" class="col-12 col-sm-6 col-md-4">
+                <div class="task-item p-3 mb-3 border rounded shadow-sm">
+                  <h5>
+                    <i class="bi bi-clipboard-check"></i> {{ task.Title }}
+                  </h5>
+                  <p><i class="bi bi-info-circle"></i> {{ task.Description }}</p>
+                  <p>กำหนดส่ง: <strong><i class="bi bi-calendar-event"></i> {{ task.DueDate | date:'dd/MM/yyyy' }}</strong></p>
+                  <p>สถานะ: 
+                    <span class="badge" [ngClass]="{
+                      'bg-success': task.Status === 'done', 
+                      'bg-warning': task.Status === 'in_progress', 
+                      'bg-secondary': task.Status === 'pending'
+                    }">
+                      <i class="bi" [ngClass]="{
+                        'bi-check-circle': task.Status === 'done', 
+                        'bi-hourglass-split': task.Status === 'in_progress', 
+                        'bi-clock': task.Status === 'pending'
+                      }"></i>
+                      {{ task.Status | titlecase }}
+                    </span>
+                  </p>
+
+                  <!-- ปุ่มสำหรับเปลี่ยนสถานะ -->
+                  <div class="btn-group mt-auto" role="group" aria-label="Task Actions">
+                    <button 
+                      class="btn btn-outline-primary"
+                      *ngIf="task.Status === 'pending'"
+                      (click)="updateStatus(task, 'in_progress')">
+                      <i class="bi bi-play-circle"></i> เริ่มงาน
+                    </button>
+                    <button 
+                      class="btn btn-outline-success"
+                      *ngIf="task.Status === 'in_progress'"
+                      (click)="updateStatus(task, 'done')">
+                      <i class="bi bi-check-circle"></i> เสร็จสิ้น
+                    </button>
+                    <button 
+                      class="btn btn-outline-danger"
+                      (click)="deleteTask(task.TaskId)">
+                      <i class="bi bi-trash"></i> ยกเลิก
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ไม่มีงานในระดับนี้ -->
+          <ng-template #noTasks>
+            <div class="text-center mt-3">
+              <p class="text-muted"><i class="bi bi-emoji-frown"></i> ไม่มีงานในระดับ {{ currentPriority | titlecase }} ที่มีสถานะ pending หรือ in_progress</p>
+              <!-- ปุ่มนำทางไปหน้า Tasks -->
+              <a routerLink="/tasks" class="btn btn-primary mt-2"><i class="bi bi-arrow-right-circle"></i> ไปที่หน้า Tasks</a>
+            </div>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

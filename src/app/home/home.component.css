@@ -1,0 +1,5 @@
+.task-item {
+  min-height: 250px; /* กำหนดความสูงขั้นต่ำของกล่อง */
+  display: flex;
+  flex-direction: column;
+}

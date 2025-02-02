@@ -1,0 +1,117 @@
+<div class="container my-5">
+  <h1 class="text-center">จัดการงาน To-Do List</h1>
+  <h2 class="text-center">ระบบบันทึกงาน Tasks To-Do List</h2>
+  
+  <div class="row">
+    <div class="col-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">เพิ่มสิ่งที่ต้องทำ</h5>
+          <form [formGroup]="tasksForm" (ngSubmit)="addNewTask()">
+            <div class="form-group">
+              <label for="taskName">งานที่ต้องทำ</label>
+              <input type="text" class="form-control" id="taskName" formControlName="taskName" />
+            </div>
+            <div class="form-group">
+              <label for="taskDescription">รายละเอียด</label>
+              <textarea class="form-control" id="taskDescription" formControlName="taskDescription" rows="3"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="taskDueDate">กำหนดการ</label>
+              <input type="date" class="form-control" id="taskDueDate" formControlName="taskDueDate" />
+            </div>
+            <div class="form-group">
+              <label for="taskPriority">ความสำคัญ</label>
+              <select class="form-control" id="taskPriority" formControlName="taskPriority">
+                <option value="1">🔴 สูง</option>
+                <option value="2">🟡 กลาง</option>
+                <option value="3">🟢 ต่ำ</option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-primary mt-2">เพิ่มงาน</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-8">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Tasks</h5>
+
+          <div class="row">
+            <!-- High Priority Tasks -->
+            <div class="col-4">
+              <div class="card border-danger border-2">
+                <div class="card-body">
+                  <h6 class="card-title">🔴 งานที่มีความสำคัญสูง</h6>
+                  <div cdkDropList id="highList" 
+                       [cdkDropListConnectedTo]="['mediumList', 'lowList']" 
+                       [cdkDropListData]="tasks_high" 
+                       (cdkDropListDropped)="drop($event, 'high')"
+                       class="task-list">
+                    <div *ngFor="let task of tasks_high" cdkDrag class="task-item p-3 mb-2 border rounded">
+                      <strong class="text-danger">{{ task.DueDate | date }}</strong><br />
+                      {{ task.Title }}<br />
+                      {{ task.Description }}<br />
+                      <span class="badge" [ngClass]="{'bg-success': task.Status === 'done', 'bg-warning': task.Status === 'in_progress', 'bg-secondary': task.Status === 'pending'}">
+                        {{ task.Status }}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Medium Priority Tasks -->
+            <div class="col-4">
+              <div class="card border-warning border-2">
+                <div class="card-body">
+                  <h6 class="card-title">🟡 งานที่มีความสำคัญกลาง</h6>
+                  <div cdkDropList id="mediumList" 
+                       [cdkDropListConnectedTo]="['highList', 'lowList']" 
+                       [cdkDropListData]="tasks_medium" 
+                       (cdkDropListDropped)="drop($event, 'medium')"
+                       class="task-list">
+                    <div *ngFor="let task of tasks_medium" cdkDrag class="task-item p-3 mb-2 border rounded">
+                      <strong class="text-warning">{{ task.DueDate | date }}</strong><br />
+                      {{ task.Title }}<br />
+                      {{ task.Description }}<br />
+                      <span class="badge" [ngClass]="{'bg-success': task.Status === 'done', 'bg-warning': task.Status === 'in_progress', 'bg-secondary': task.Status === 'pending'}">
+                        {{ task.Status }}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Low Priority Tasks -->
+            <div class="col-4">
+              <div class="card border-success border-2">
+                <div class="card-body">
+                  <h6 class="card-title">🟢 งานที่มีความสำคัญต่ำ</h6>
+                  <div cdkDropList id="lowList" 
+                       [cdkDropListConnectedTo]="['highList', 'mediumList']" 
+                       [cdkDropListData]="tasks_low" 
+                       (cdkDropListDropped)="drop($event, 'low')"
+                       class="task-list">
+                    <div *ngFor="let task of tasks_low" cdkDrag class="task-item p-3 mb-2 border rounded">
+                      <strong class="text-success">{{ task.DueDate | date }}</strong><br />
+                      {{ task.Title }}<br />
+                      {{ task.Description }}<br />
+                      <span class="badge" [ngClass]="{'bg-success': task.Status === 'done', 'bg-warning': task.Status === 'in_progress', 'bg-secondary': task.Status === 'pending'}">
+                        {{ task.Status }}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,72 @@
+<div class="container my-5">
+    <h1 class="text-center">ประวัติงานที่เสร็จสิ้นแล้ว</h1>
+  
+    <!-- แสดงงานลำดับความสำคัญสูง -->
+    <div *ngIf="highPriorityTasks.length > 0">
+      <h3 class="text-danger">🔴 งานที่มีความสำคัญระดับสูง</h3>
+      <div class="row">
+        <div *ngFor="let task of highPriorityTasks" class="col-12 col-sm-6 col-md-4 mb-3">
+          <div class="task-item p-3 border rounded shadow-sm h-100">
+            <h5>
+              <i class="bi bi-clipboard-check"></i> {{ task.Title }}
+            </h5>
+            <p><i class="bi bi-info-circle"></i> {{ task.Description }}</p>
+            <p>กำหนดส่ง: <strong><i class="bi bi-calendar-event"></i> {{ task.DueDate | date:'dd/MM/yyyy' }}</strong></p>
+            <p>สถานะ: 
+              <span class="badge bg-success">
+                <i class="bi bi-check-circle"></i> Done
+              </span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- แสดงงานลำดับความสำคัญกลาง -->
+    <div *ngIf="mediumPriorityTasks.length > 0" class="mt-4">
+      <h3 class="text-warning">🟡 งานที่มีความสำคัญระดับกลาง</h3>
+      <div class="row">
+        <div *ngFor="let task of mediumPriorityTasks" class="col-12 col-sm-6 col-md-4 mb-3">
+          <div class="task-item p-3 border rounded shadow-sm h-100">
+            <h5>
+              <i class="bi bi-clipboard-check"></i> {{ task.Title }}
+            </h5>
+            <p><i class="bi bi-info-circle"></i> {{ task.Description }}</p>
+            <p>กำหนดส่ง: <strong><i class="bi bi-calendar-event"></i> {{ task.DueDate | date:'dd/MM/yyyy' }}</strong></p>
+            <p>สถานะ: 
+              <span class="badge bg-success">
+                <i class="bi bi-check-circle"></i> Done
+              </span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- แสดงงานลำดับความสำคัญต่ำ -->
+    <div *ngIf="lowPriorityTasks.length > 0" class="mt-4">
+      <h3 class="text-success">🟢 งานที่มีความสำคัญระดับต่ำ</h3>
+      <div class="row">
+        <div *ngFor="let task of lowPriorityTasks" class="col-12 col-sm-6 col-md-4 mb-3">
+          <div class="task-item p-3 border rounded shadow-sm h-100">
+            <h5>
+              <i class="bi bi-clipboard-check"></i> {{ task.Title }}
+            </h5>
+            <p><i class="bi bi-info-circle"></i> {{ task.Description }}</p>
+            <p>กำหนดส่ง: <strong><i class="bi bi-calendar-event"></i> {{ task.DueDate | date:'dd/MM/yyyy' }}</strong></p>
+            <p>สถานะ: 
+              <span class="badge bg-success">
+                <i class="bi bi-check-circle"></i> Done
+              </span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- แสดงข้อความเมื่อไม่มีงานที่เสร็จสิ้นแล้ว -->
+    <div *ngIf="highPriorityTasks.length === 0 && mediumPriorityTasks.length === 0 && lowPriorityTasks.length === 0" class="text-center mt-5">
+      <p class="text-muted"><i class="bi bi-emoji-frown"></i> ยังไม่มีงานที่เสร็จสิ้นแล้ว</p>
+    </div>
+  </div>
+  
